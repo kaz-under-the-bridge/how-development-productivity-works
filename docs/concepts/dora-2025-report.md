@@ -79,6 +79,23 @@ DORA（DevOps Research and Assessment）が2025年に公開したレポートの
 
 ## 5. DORAメトリクスの進化
 
+### メトリクス構造の変遷
+
+**従来（〜2023）**: 4指標を並列に扱い、総合的にLow〜Eliteに分類
+
+**現在（2024〜）**: 5指標を2カテゴリに再編成
+
+```
+スループット（Throughput）
+├── Deployment Frequency（デプロイ頻度）
+├── Change Lead Time（変更リードタイム）
+└── Failed Deployment Recovery Time（旧MTTR）← 安定性から移動・改名
+
+不安定性（Instability）
+├── Change Fail Rate（変更失敗率）
+└── Deployment Rework Rate（新規追加）
+```
+
 ### 2024年の変更
 
 - **第5の指標「Rework Rate」** を導入
@@ -90,6 +107,82 @@ DORA（DevOps Research and Assessment）が2025年に公開したレポートの
 - **Low/Medium/High/Eliteの4段階分類を廃止**
 - 指標ごとのバケット分類 + **7つの組織アーキタイプ**に置換
 - AI支援ソフトウェア開発に完全特化
+
+### 4段階分類が廃止された経緯
+
+Low/Medium/High/Eliteの分類は2014年のAccelerate研究以来使われてきたが、**単一軸上の線形ランキング**であり「Lowから順にEliteへ登っていく」という改善パスを暗黙に想定していた。
+
+しかし現実にはこのモデルが破綻する状況が生じていた：
+
+- **速いが不安定**なチーム（デプロイ頻度は高いが変更失敗率も高い）
+- **遅いが堅実**なチーム（頻度は低いが品質は高い）
+- AIにより個人指標はElite級だが組織的にはLowという矛盾
+
+決定的だったのは**2年連続でAIツール採用がデリバリーパフォーマンス悪化と相関**した事実（2024年データ: スループット推定-1.5%、安定性推定-7.2%）。この「AI生産性パラドックス」を4段階分類では説明できなかった。
+
+DORAチームがクラスタ分析を行った結果、チームは4段階ではなく**7つの質的に異なるパターン**に分かれることが判明。「どのレベルにいるか」ではなく**「何に制約されているか」**で分類すべきという認識転換に至り、7つの組織アーキタイプへ移行した。
+
+### 各指標の再定義詳細
+
+#### Deployment Frequency（デプロイ頻度）
+
+- **定義**: 一定期間内のデプロイ回数（定義自体は変わらず）
+- **AI時代の解釈変化**: AIでコード生成が加速し頻度は自然に上がるが、**量＝進歩ではなくなった**。安定性指標と併せないと意味をなさない
+
+#### Change Lead Time（変更リードタイム）
+
+- **定義**: コードコミットから本番デプロイまでの所要時間
+- **AI時代の問題**: AIはコーディングフェーズを加速するが、**レビュー・テスト・承認は加速しない**。むしろAI生成コードへの不確実性でレビューに時間がかかるケースがある。**ステージ分解**しないとボトルネックが見えない
+
+#### Failed Deployment Recovery Time（旧MTTR）
+
+- **旧名**: Mean Time to Recovery（平均復旧時間）
+- **変更点**: 名称を改称し、カテゴリを**安定性→スループット**に移動
+- **移動の理由**: 「障害からの復旧速度」は安定性（壊れにくさ）ではなく、**フロー回復のスループット**に近い。速く復旧できる＝安定しているわけではない
+- **注意点**: 復旧速度だけでなく**再発率**と併せて見る必要がある
+
+#### Change Fail Rate（変更失敗率）
+
+- **定義**: ロールバックやホットフィックスが必要な**重大障害**を起こしたデプロイの割合
+- **問い**: 「本番を深刻に壊したか？」
+- **AI時代の問題**: デプロイ数が増えて失敗**率**が横ばいでも**絶対数は増加**している。Rework Rateと併用しないと実態が見えない
+
+#### Deployment Rework Rate（新規追加）
+
+- **定義**: 本番で発見されたユーザー影響のあるバグを修正するための**予定外デプロイ**の割合
+- **問い**: 「自分たちでどれだけ予定外の手戻り作業を生んでいるか？」
+- **追加の理由**: 従来の4指標では検出できなかった**「静かな手戻りコスト」**を可視化する
+
+### Change Fail Rate vs Rework Rate: 具体例
+
+この2つの不安定性指標は混同しやすいが、捉える深刻度のレベルが異なる。
+
+**1週間に10回デプロイしたチームの例：**
+
+| デプロイ | 内容 | CFR | Rework |
+|---------|------|:---:|:------:|
+| #1 | 新機能リリース（正常） | - | - |
+| #2 | 新機能リリース（正常） | - | - |
+| #3 | 新機能リリース → **DB接続障害でサービスダウン** | **○** | **○** |
+| #4 | #3のロールバック | - | - |
+| #5 | 新機能リリース（正常） | - | - |
+| #6 | #1で入った**軽微なUIバグ**の修正（予定外） | - | **○** |
+| #7 | 新機能リリース（正常） | - | - |
+| #8 | #5で入った**計算ロジックの誤り**の修正（予定外） | - | **○** |
+| #9 | #2で入った**メール二重送信バグ**の修正（予定外） | - | **○** |
+| #10 | 新機能リリース（正常） | - | - |
+
+**結果：**
+- **Change Fail Rate = 1/10 = 10%** → 「まあまあ健全」に見える
+- **Rework Rate = 4/10 = 40%** → デプロイの4割が手戻り修正
+
+**ポイント:** #6, #8, #9はサービスダウンを起こしていないのでCFRにはカウントされないが、すべて予定外の修正デプロイでありRework Rateに計上される。CFRだけでは**「速いが雑」な状態を見逃す**。
+
+AIでコード生成を加速すると、PRサイズ肥大化（+154%）→ レビューが粗くなる → 致命的ではないが微妙なバグがすり抜ける → サービスは落ちないのでCFRは良好に見えるが、予定外の修正デプロイが増え続ける → **Rework Rateだけが悪化を検出する**、というパターンが典型的。
+
+> 「CFRとRework Rateは一つのシステムとして設計されている。スループット指標が速度を示し、不安定性指標が品質を明らかにし、両者の相互作用が正しいものを最適化できているかを教えてくれる」— Faros AI
+
+出典: [DORA Metrics Guide](https://dora.dev/guides/dora-metrics-four-keys/), [Faros AI - 5th DORA Metric](https://www.faros.ai/blog/5th-dora-metric-rework-rate-track-it-now), [Plandek - DORA in the Age of AI](https://plandek.com/blog/how-to-measure-dora-metrics-in-the-age-of-ai-2026/)
 
 ---
 
@@ -175,6 +268,12 @@ Thoughtworks Chris Westerhold（Global Practice Director）による分析。
 ### 一次ソース
 - [DORA 2025 Report](https://dora.dev/research/2025/dora-report/)
 - [Google Cloud 2025 DORA AI Report](https://cloud.google.com/resources/content/2025-dora-ai-assisted-software-development-report)
+
+### メトリクス定義・解説
+- [DORA Metrics Guide](https://dora.dev/guides/dora-metrics-four-keys/)
+- [Faros AI - 5th DORA Metric Rework Rate](https://www.faros.ai/blog/5th-dora-metric-rework-rate-track-it-now)
+- [CD Foundation - The DORA 4 key metrics become 5](https://cd.foundation/blog/2025/10/16/dora-5-metrics/)
+- [Plandek - DORA Metrics in the Age of AI 2026](https://plandek.com/blog/how-to-measure-dora-metrics-in-the-age-of-ai-2026/)
 
 ### 分析・解説
 - [Faros AI - DORA Report 2025 Key Takeaways](https://www.faros.ai/blog/key-takeaways-from-the-dora-report-2025)
