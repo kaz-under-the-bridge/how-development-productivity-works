@@ -6,10 +6,12 @@
 
 ## 構成
 
-- `docs/` - ファクト・理論・考察をまとめたドキュメント群
-  - `docs/concepts/` - 概念・理論の整理
-  - `docs/people/` - キーパーソンの思想・主張まとめ
-  - `docs/notes/` - 壁打ちメモ・考察
+- `docs/index.md` - 全体マップ（広木大地氏の概念体系を骨格にしたナビゲーション）
+- `docs/foundations/` - 理論的基盤（TOC、リーン、組織文化、複雑性と不確実性）
+- `docs/frameworks/` - 測定フレームワーク（DORA Four Keys、SPACE、DX Core 4、比較）
+- `docs/research/` - 実証研究・レポート（Accelerate、DORAレポート、AI影響データ）
+- `docs/perspectives/` - 人物・組織の視点（広木大地、Nicole Forsgren、業界論争）
+- `docs/notes/` - 壁打ちメモ・考察
 
 ## 方針
 
