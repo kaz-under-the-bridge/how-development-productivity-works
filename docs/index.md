@@ -119,6 +119,14 @@
 
 ---
 
+## VI. 思索・考察
+
+| テーマ | 内容 | 詳細 |
+|--------|------|------|
+| **[AIハーネスによる開発生産性と安全性の統合](./notes/ai-harness-productivity-safety.md)** | 生産性×安全性の共進化、消えた生産性のAI版、Layer 1/2/3計測問題、OODAループ設計 | ハーネスエンジニアリングが生産性と安全性をどう接続するか |
+
+---
+
 ## ディレクトリ構成
 
 ```
@@ -146,6 +154,7 @@ docs/
 │   ├── nicole-forsgren.md
 │   └── industry-debates.md
 └── notes/                   壁打ちメモ・考察（意見）
+    └── ai-harness-productivity-safety.md
 ```
 
 | レイヤー | 性質 | 更新頻度 |
