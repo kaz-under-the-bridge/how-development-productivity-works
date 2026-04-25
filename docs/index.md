@@ -75,6 +75,7 @@
 | **[DORA / Four Keys](./frameworks/dora-four-keys.md)** | ソフトウェアデリバリーのスループットと安定性 | 10年の実証研究。2025年に7アーキタイプに進化 |
 | **[SPACE](./frameworks/space.md)** | 開発者の生産性を5次元で捕捉 | DORAが捉えない満足度・フロー・協働を補完 |
 | **[DX Core 4](./frameworks/dx-core-4.md)** | DORA + SPACEの統合。ビジネスインパクトまで | AI時代を前提に設計。300以上の組織で実証 |
+| **[AI Maturity](./frameworks/ai-maturity.md)** | 組織のAI活用成熟度（基盤×差別化の2軸） | Accenture提唱。17ケイパビリティ、4段階の成熟度モデル |
 
 → 詳細: [フレームワーク比較](./frameworks/comparison.md)
 
@@ -106,6 +107,15 @@
 - 経験豊富な開発者がAIで19%遅くなったという研究結果も（METR 2025）
 
 → 詳細: [AI影響の実態データ](./research/ai-impact-data.md)
+
+### コーディングエージェントの台頭（2025年10月〜2026年4月）
+
+- AIコーディングツールが「コード補完」から「自律エージェント」へ転換
+- Agent = Model + Harness（ハーネス: ツールオーケストレーション、コンテキスト管理、エラー回復）
+- 市場40億ドル。Claude Code（46%支持）、Cursor（19%）、GitHub Copilot（9%）
+- SWE-bench Verifiedのトップスコアが65%→80.9%に（2025年初頭→2026年3月）
+
+→ 詳細: [コーディングエージェント最新動向](./research/coding-agents-landscape-2026.md)
 
 ---
 
@@ -141,10 +151,12 @@ docs/
 │   ├── dora-four-keys.md
 │   ├── space.md
 │   ├── dx-core-4.md
+│   ├── ai-maturity.md
 │   └── comparison.md
 ├── research/                実証研究・レポート（エビデンス）
 │   ├── accelerate.md
 │   ├── ai-impact-data.md
+│   ├── coding-agents-landscape-2026.md
 │   └── dora-reports/
 │       ├── overview.md
 │       ├── 2024.md
@@ -154,7 +166,10 @@ docs/
 │   ├── nicole-forsgren.md
 │   └── industry-debates.md
 └── notes/                   壁打ちメモ・考察（意見）
-    └── ai-harness-productivity-safety.md
+    ├── ai-harness-productivity-safety.md
+    ├── ref-accenture-ai-maturity.md
+    ├── ref-fowler-harness-engineering.md
+    └── evidence/
 ```
 
 | レイヤー | 性質 | 更新頻度 |
