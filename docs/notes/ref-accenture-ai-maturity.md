@@ -45,7 +45,46 @@ AI成熟度を **基盤的能力（AI Foundation）** と **差別化能力（AI
 - イノベーション文化
 - 責任あるAI（Responsible AI）
 
-> **注記**: Accentureのレポートは17のケイパビリティを特定しているが、公開資料では上記のカテゴリ名と代表例のみが示されており、17件すべての個別名称は公開されていない。レポートPDF内の図表（キューブ図）に全件が含まれるが、テキストとしての完全なリストは未公開。
+> **注記**: 以下の17ケイパビリティはレポートPDF内の図表（キューブ図）から再構成したもの。公開テキストにはカテゴリ名と代表例のみが記載されている。
+
+### 17のキーケイパビリティ
+
+#### Strategy and Sponsorship（戦略とスポンサーシップ）
+
+| # | ケイパビリティ | 基盤 | 差別化 |
+|---|---------------|:----:|:------:|
+| 1 | Senior Sponsorship（経営層の支援） | o | o |
+| 2 | AI Strategy（AI戦略） | o | o |
+| 3 | Proactive vs. Reactive（先行投資型判断） | o | - |
+| 4 | Readily Available AI/ML Tools（AI/MLツール整備） | - | o |
+| 5 | Readily Available Developer Networks（開発者ネットワーク） | o | o |
+
+#### Data and AI Core（データとAI基盤）
+
+| # | ケイパビリティ | 基盤 | 差別化 |
+|---|---------------|:----:|:------:|
+| 6 | Build vs. Buy（内製/購入判断） | - | o |
+| 7 | Platform and Technology（プラットフォーム整備） | o | - |
+| 8 | Experimentation Data — Change（実験データの改善） | o | - |
+| 9 | Data Management and Governance（データ管理） | o | - |
+| 10 | Data Management and Governance — Change（データガバナンス改善） | o | - |
+
+#### Talent and Culture（人材と文化）
+
+| # | ケイパビリティ | 基盤 | 差別化 |
+|---|---------------|:----:|:------:|
+| 11 | Mandatory AI Training（必須AIトレーニング） | - | o |
+| 12 | Employee Competency in AI-Related Skills（AIスキル診断） | o | - |
+| 13 | Innovation Culture Embedded（イノベーション文化の定着） | - | o |
+| 14 | Innovation Culture Encouraged（イノベーション文化の推奨） | - | o |
+| 15 | AI Talent Strategy（AI人材戦略） | o | o |
+
+#### Responsible AI（責任あるAI）
+
+| # | ケイパビリティ | 基盤 | 差別化 |
+|---|---------------|:----:|:------:|
+| 16 | Responsible AI（責任あるAI方針） | o | o |
+| 17 | Responsible AI — Change（継続的改善と変化管理） | o | - |
 
 ---
 
